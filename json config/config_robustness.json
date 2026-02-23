@@ -1,0 +1,19 @@
+{
+    "mode": "uncertainty",
+    "common": {
+        "modelpath": "C:/Sviluppo/datasets/Pneumothorax/Models/pneumo_model_simple.keras",
+        "inputpath": "C:/Sviluppo/datasets/Pneumothorax/small_train_data_set",
+        "labelfile": "C:/Sviluppo/datasets/Pneumothorax/small_train_data_set/classes.csv",
+        "logfile": "log_uncertainty_simple.log",
+        "max_samples": 50,
+        "report": true
+    },
+    "parameters": {
+        "altname": "Blur",
+        "altparams": "0,1,3",
+        "npoints": 11,
+        "unc_method": "mi",
+        "n_mc_samples": 10,
+        "threshold": 0.5
+    }
+}

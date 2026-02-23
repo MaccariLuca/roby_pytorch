@@ -1,0 +1,84 @@
+python -m roby.run_roby from_config config_robustness.json
+
+per l'avvio con file JSON di configurazione
+Li trovi in cartella
+
+python -m roby.run_roby robustness
+
+PARAMETRI:
+  --modelpath    (Obbligatorio) Percorso del file del modello (.keras o .h5).
+  --inputpath    (Obbligatorio) Cartella contenente le immagini di test.
+  --labelfile    (Obbligatorio) File CSV contenente i nomi delle classi.
+  --altname      (Obbligatorio) Nome della classe di alterazione.
+  --altparams    (Obbligatorio) Parametri dell'alterazione (separati da virgola).
+  --npoints      (Obbligatorio) Numero di livelli di alterazione da testare.
+  --theta        (Obbligatorio) Soglia di accuratezza minima (0.0 - 1.0).
+  --module_name  (Opzionale)    Modulo Python dove cercare l'alterazione.
+                                Default: "roby.Alterations"
+  --debug        (Opzionale)    Flag per attivare le stampe di debug.
+                                Default: Attivo. Usa --no-debug per disattivare.
+
+python -m roby.run_roby uncertainty
+
+MODALITÀ DI CARICAMENTO (Usarne una):
+  ENSEMBLE:
+     --models_dir   (Obbligatorio) Cartella contenente i file dell'ensemble.
+     --n_models     (Obbligatorio) Numero di modelli da caricare.
+
+  MODELLO SINGOLO (Standard o MC Dropout):
+     --modelpath    (Obbligatorio) Percorso del file del modello singolo.
+
+PARAMETRI COMUNI:
+  --inputpath    (Obbligatorio) Cartella contenente le immagini di test.
+  --labelfile    (Obbligatorio) File CSV contenente i nomi delle classi.
+  --altname      (Obbligatorio) Nome della classe di alterazione.
+  --altparams    (Obbligatorio) Parametri dell'alterazione.
+  --npoints      (Obbligatorio) Numero di livelli di alterazione.
+  --threshold    (Opzionale)    Soglia per Thresholded Accuracy (Default: 0.5).
+  --n_mc_samples (Opzionale)    Numero passaggi Monte Carlo (Default: 10).
+                                (Usato solo se il metodo lo richiede).
+  --unc_method   (Opzionale)    Metodo di calcolo incertezza.
+                                Default: entropy
+
+VALORI PER --unc_method:
+    entropy:        Entropia (Standard o su media Ensemble/MCD).
+    confidence:     1 - Confidenza massima (Standard).
+    mi:             Mutua Informazione (Richiede Ensemble o MCD).
+    mean_entropy:   Entropia media (Richiede Ensemble o MCD).
+    mean_var:       Varianza predittiva media (Richiede Ensemble o MCD).
+
+-- ESEMPI DI ALTERAZIONI DISPONIBILI
+
+BLUR, NOISE, BRIGHTNESS, CONTRAST
+
+python -m roby.run_roby referral
+
+Supporta sia ENSEMBLE (--models_dir) che MODELLO SINGOLO (--modelpath) come sopra.
+
+PARAMETRI:
+  --inputpath    (Obbligatorio) Cartella contenente le immagini di test.
+  --labelfile    (Obbligatorio) File CSV contenente i nomi delle classi.
+  --unc_method   (Opzionale)    Metodo di calcolo incertezza (Default: entropy).
+  --n_mc_samples (Opzionale)    Samples per MC Dropout (Default: 10).
+  --steps        (Opzionale)    Numero di step della curva (Default: 20).
+
+  OPZIONI ALTERAZIONE FISSA (Se si vuole testare su dati alterati):
+  --altname      (Opzionale)    Nome alterazione (es. Blur).
+  --altparams    (Opzionale)    Parametri alterazione.
+  --altlevel     (Opzionale)    Livello fisso di alterazione (0.0 - 1.0).
+                                Default: 0.0 (Dati originali).
+
+-- ERRORI VARI RISCONTRATI
+
+"ModuleNotFoundError: No module named 'roby'"
+  - lanciare il comando dalla cartella superiore (quella che
+    contiene la cartella "roby")
+  - python -m roby.run_roby ...
+
+"Ensemble models not found"
+  - Verifica che nella cartella indicata da --models_dir i file si chiamino
+    esattamente "ensemble_model_0.keras", "ensemble_model_1.keras", ecc.
+
+"OpenCV Error"
+  - Controlla percorso --inputpath
+  - immagini sono in formato standard?

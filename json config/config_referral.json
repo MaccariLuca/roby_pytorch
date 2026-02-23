@@ -1,0 +1,25 @@
+{
+    "mode": "referral",
+    "parameters": {
+        "modelpath": "C:/Sviluppo/datasets/mnist_roby/original_model.keras",
+        "inputpath": "C:/Sviluppo/datasets/mnist_roby/test_images",
+        "labelfile": "C:/Sviluppo/datasets/mnist_roby/classes.csv",
+        "logfile": "log_referral_json.log",
+        
+        "report": true,
+        "max_samples": 50,
+        
+        "altname": "Blur",
+        "altparams": "0,1,3",
+        "altlevel": 0.5,
+        
+        "unc_method": "entropy",
+        "n_mc_samples": 10,
+        "steps": 20,
+        
+        "doctor_accuracy": 0.95,
+        "cost_error": 100.0,
+        "cost_doctor": 10.0,
+        "cost_ai": 0.0
+    }
+}

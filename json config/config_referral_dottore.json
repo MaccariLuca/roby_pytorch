@@ -1,0 +1,27 @@
+{
+    "mode": "referral",
+    "common": {
+        "modelpath": "C:/Sviluppo/datasets/Pneumothorax/Models/pneumo_model.keras",
+        "inputpath": "C:/Sviluppo/datasets/Pneumothorax/small_train_data_set",
+        "labelfile": "C:/Sviluppo/datasets/Pneumothorax/small_train_data_set/classes.csv",
+        "logfile": "log_referral_pneumo.log",
+        "max_samples": 100,
+        "report": true
+    },
+    "parameters": {
+        "altname": "GaussianNoise",
+        "altparams": [0, 1, 0.1],
+        "altlevel": 0,
+        "unc_method": "entropy",
+        "n_mc_samples": 10,
+        "steps": 100,
+        "doctor_accuracy": 0.95,
+        "cost_fn": 1000000.0, 
+        "cost_fp": 500.0,
+        "cost_doctor": 25.0,
+        "cost_ai": 0.25,
+        "time_ai": 0.05,
+        "time_doc_base": 20.0,
+        "time_doc_weight": 20
+    }
+}

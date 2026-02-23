@@ -1,0 +1,76 @@
+LISTA MODIFICHE EFFETTUATE
+
+
+-- Modifiche Setup e Dipendenze --
+
+Creato requirements.txt per python 3.11 + librerie aggiornate
+
+Aggiunto tf_keras per far girare i vecchi modelli sui nuovi TensorFlow
+
+Aggiornati tensorflow>=2.16  e numpy>=1.26
+
+- In setup.py -
+
+Allentati i vincoli di versione (da == a >=)
+
+Corretto nome pacchetto: da opencv_python a opencv-python
+
+Rimosso keras standalone (ora è dentro TensorFlow)
+
+Impostato os.environ["TF_USE_LEGACY_KERAS"] = "1" all'inizio dello script run_roby.py per leggere file .h5
+
+
+-- Rivista la struttura delle cartelle --
+
+Creati pacchetti come codice Nico:
+
+Creato pacchetto `roby/metrics/`: diviso in accuracies.py, calibration.py (ECE), area_based.py (ACUA/NCA), curves.py
+
+Creato pacchetto `roby/uncertainty/`: contiene measures.py per Mutual Info, Mean Entropy, Varianza
+
+Creato pacchetto `roby/viz/`: contiene robustness.py per generazione grafici
+
+-- Funzionalità --
+
+Aggiornato UncertaintyNN.py per supportare MCD (inferenza stocastica su modello singolo)
+
+Implementata logica per eseguire N predizioni con training=True
+
+Calcolo automatico dell'Errore di calibrazione nel loop di test
+
+Aggiornato EnvironmentRTest.py per gestire sia modello singolo che liste di modelli
+
+
+- in RunRoby.py -
+
+Riscrittousando la libreria Click
+
+Inserito il riconoscimento delle dimensione immagine dal modello per il preprocessing
+
+Unico comando `uncertainty`:
+    - Se si passa --modelpath: esegue test su modello singolo (Standard o MCD)
+    - Se si passa --models_dir: esegue test su Deep Ensemble
+
+Aggiunti nuovi parametri:
+    - --n_mc_samples: numero di passaggi per Monte Carlo Dropout
+    - --threshold: soglia per l'accuratezza thresholded
+    - --unc_method: supporta ora 'mi' (Mutual Info) e 'mean_entropy' oltre a 'entropy' e 'confidence'
+
+Aggiunta generazione automatica dei grafici (Accuracy, Thresholded, Weighted, Net Certainty) alla fine del test
+
+-- referral --
+
+Implementato modulo `roby/ReferralNN.py` per l'analisi delle curve di rigetto
+
+Creato `roby/ReferralResults.py` per gestire i dati di referral + i calcoli
+    - Curva Oracle (Performance ottimale)
+    - Metrica AUSE per quantificare la qualità dell'incertezza
+
+Aggiunto modulo grafico `roby/viz/referral.py` che plotta il grafico
+
+
+-- TODO / Sviluppi Futuri --
+
+- Generare report HTML più chiaro e interattivo
+- File di configurazione .JSON per gestire molti parametri
+- Supporto PyTorch .pt + .pth  (Luca)

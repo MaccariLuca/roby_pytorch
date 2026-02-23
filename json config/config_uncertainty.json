@@ -1,0 +1,19 @@
+{
+    "mode": "uncertainty",
+    "common": {
+        "modelpath": "C:/Sviluppo/datasets/Pneumothorax/Models/pneumo_model.keras",
+        "inputpath": "C:/Sviluppo/datasets/Pneumothorax/small_train_data_set",
+        "labelfile": "C:/Sviluppo/datasets/Pneumothorax/small_train_data_set/classes.csv",
+        "logfile": "log_uncertainty_singolo.log",
+        "max_samples": 100,
+        "report": true
+    },
+    "parameters": {
+        "altname": "GaussianNoise",
+        "altparams": [0, 1, 0.1],
+        "npoints": 11,
+        "unc_method": "entropy",
+        "threshold": 0.5,
+        "n_mc_samples": 10
+    }
+}
